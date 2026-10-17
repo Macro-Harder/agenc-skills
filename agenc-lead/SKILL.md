@@ -12,6 +12,8 @@ You are the lead AgenC run executing agenc-lead. A headless `agenc ... -p` reads
 
 2. Dispatch: Run independent units in parallel by spawning separate `agenc ... -p` child processes from your shell tool, one per unit. Serialize when units touch the same files. Put each run in its own git worktree (`git worktree add -b <branch> <dir>` under sandbox). All options before -p: the per-run call cap and deadline flags (see [`agenc-cli`](../agenc-cli/SKILL.md)) `--deadline +<s> --deadline-reserve <s> --output-format stream-json` (or json) redirected to <job-dir>/out/<unit>.json, stderr to <unit>.err, exit code saved immediately to <unit>.exit, PID saved to <unit>.pid. The fan-out shape follows guidance in [`agent-with-subagents`](../agent-with-subagents/SKILL.md).
 
+Launch every child as `env -u AGENC_MAX_OUTPUT_TOKENS agenc ...` so no output cap leaks in from your own environment, unless you want a cap for that child (then set it for that child only).
+
 Before any batch, run a ping as the FIRST child in a scratch dir (per-run call cap of 3, `--deadline +120`, reply "pong"). If the ping fails, or your sandbox will not let you start a child `agenc`, stop and write the report; do not try workarounds.
 
 For Builder/Fixer/Rebuilder children that must run tests use `--bypass-approvals` (keeps the OS sandbox). Verifier is read-only on code but runs commands, so also needs `--bypass-approvals` in a disposable copy/worktree and is told not to edit. Red team audits use `--permission-mode default` or plan. Never `--dangerously-bypass-approvals-and-sandbox`.
