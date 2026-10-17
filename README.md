@@ -10,6 +10,7 @@ Agent skills for driving the [AgenC](https://get.agenc.ag) coding-agent CLI from
 | [agenc-briefs](agenc-briefs/SKILL.md) | You are writing the brief for an AgenC run and want it right the first time. |
 | [agenc-review](agenc-review/SKILL.md) | An AgenC run produced a change and you must accept, fix, or reject it. |
 | [agenc-retry](agenc-retry/SKILL.md) | A run failed, hit a cap, or returned bad work, and you must decide what to do next. |
+| [three-strike-rebuild](three-strike-rebuild/SKILL.md) | Three fix attempts on the same failing test or bug have failed, so stop retrying, write a structured summary, and hand it to the blue team as an AgenC job to rebuild from a new perspective. |
 | [agenc-escalate-to-lead](agenc-escalate-to-lead/SKILL.md) | Subagents must stop and escalate to their lead instead of guessing, and the lead must triage them. |
 | [agenc-handoff](agenc-handoff/SKILL.md) | Work moves between agents, runs, or to a human, and the next owner must pick it up from a file, not chat. |
 | [agenc-spend-guard](agenc-spend-guard/SKILL.md) | A job must stay under a dollar limit, measured from your provider's real usage. |
