@@ -43,7 +43,7 @@ Every field has a value. Write `none` or `not run, because ...` rather than leav
 | `TASK` | What you were asked to do. |
 | `STATUS` | Exactly one of `complete`, `partial`, `blocked`. |
 | `OUTPUT` | Paths to the deliverables. |
-| `BASE` | For code: repo, base commit sha, branch, worktree path. Otherwise `none`. |
+| `BASE` | For code: repo, base sha the work started from, head sha, branch, worktree path. Otherwise `none`. |
 | `VERIFY` | The exact command you ran and its literal result, pasted. |
 | `COST` | Real spend from the provider usage endpoint, and whether usage had settled. |
 | `SOURCES` | Files, links, logs, timestamps you worked from. |
@@ -78,7 +78,7 @@ python3 handoff.py move "$p" --status complete   # refused unless check passes
 ## 5. Sending
 
 1. Fill every field. Paste VERIFY output; do not retype it.
-2. For code, commit or record the worktree state: `git -C <worktree> rev-parse HEAD` and `git -C <worktree> status --short`. Put both in `BASE`.
+2. For code, record the base sha you started from, `git -C <worktree> rev-parse HEAD`, and `git -C <worktree> status --short`. Put all three in `BASE`.
 3. Run `check`. Fix until it exits 0. Validate at the boundary, before the packet leaves, not after the receiver trips on a gap.
 4. `move` to the folder that matches STATUS.
 5. Hand over the path. Nothing else goes in the message but one line of what it is.
@@ -101,7 +101,7 @@ Follow [`agenc-briefs`](../agenc-briefs/SKILL.md) for the rest of the brief. In 
 1. Read the packet before any chat summary. Where they disagree, the packet wins; where the packet is wrong, the files win.
 2. Run `check`. An incomplete packet goes back to the sender, or the gaps go under your own UNCERTAINTIES.
 3. Re-run the VERIFY command yourself. A pasted result is the sender's evidence, not yours.
-4. Confirm BASE: `git -C <worktree> log -1 --format=%H` matches, and `git diff <sha>` shows only what OUTPUT claims.
+4. Confirm BASE: `git -C <worktree> rev-parse HEAD` matches the head sha, and `git -C <worktree> diff <base sha>` shows only what OUTPUT claims.
 5. Work through DO NOT ASSUME before building on anything.
 
 ## 8. By role
