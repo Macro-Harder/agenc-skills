@@ -17,6 +17,8 @@ Agent skills for driving the [AgenC](https://get.agenc.ag) coding-agent CLI from
 | [agenc-batching](agenc-batching/SKILL.md) | Many small independent asks would each pay the fixed per-run prompt overhead; batch them into one run. |
 | [agenc-unattended](agenc-unattended/SKILL.md) | You run AgenC from cron, CI, or other automation nobody is watching. |
 | [xmodel-confirm](xmodel-confirm/SKILL.md) | An auditor or red team reports bugs and you want to know if a different model independently finds or confirms each one before acting on it. |
+| [agenc-lead](agenc-lead/SKILL.md) | A team of AgenC subagent runs for intake, roster, dispatch, watch, independent verification, red team gates, real cost, report and handoff needs oversight; a lead agent manages them. |
+| [blue-team-roster](blue-team-roster/SKILL.md) | Risk signals from a project call for deciding blue-team member roles to launch; select the smallest roster that covers the risks. |
 
 Install: copy the skill folders you want into your agent's skills directory. Each folder is a `SKILL.md` plus any helper script it uses. Skills link to each other by relative path, so copy the ones they reference too.
 
