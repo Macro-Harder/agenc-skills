@@ -91,6 +91,8 @@ Set every layer. Each catches what the others miss.
 
 Even trivial tasks take several model calls. A cap of 2 or 3 fails on simple work. Start near 10 for small tasks and raise it once if the run ends with `reached its N model-call limit`.
 
+Every run also pays a fixed prompt overhead. Batch small asks: see [`agenc-batching`](../agenc-batching/SKILL.md).
+
 ## 6. Per-day limits
 
 Take one snapshot per day per key, then check it before each job:

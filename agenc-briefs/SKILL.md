@@ -27,6 +27,7 @@ Every brief has these parts, in this order:
 - **Shape first.** Name the data shape before the logic. Ask for types where bad states cannot be represented: an enum instead of free strings, a required field instead of an optional one. Ask for input to be parsed and validated once, at the boundary.
 - **Name the files.** "Fix the parser" makes it search. "Fix `parse_line()` in `src/parser.py`" does not.
 - **One task per brief.** Two goals means split it (see [`agent-with-subagents`](../agent-with-subagents/SKILL.md)).
+- **Batch tiny asks.** Many small independent questions go in one numbered run with a JSON-array contract. See [`agenc-batching`](../agenc-batching/SKILL.md).
 - **Root cause.** Ask for a reproduction first and a fix of the cause. Say that guards which hide the error do not count.
 - **Headless runs have no approver.** A tool that needs approval is denied and still costs a call. In `--permission-mode acceptEdits`, tell the agent not to run shell commands and run the done command yourself. For read-only work, paste the input (a diff, a log excerpt) into the brief and tell it to answer in its final message without tools.
 - **No secrets.** Never put keys, tokens, passwords, or private data in a brief. Pass credentials to tools through env vars, not the prompt.
