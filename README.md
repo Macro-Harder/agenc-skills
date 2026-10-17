@@ -1,6 +1,6 @@
 # AgenC agent skills
 
-Agent skills for driving the [AgenC](https://get.agenc.ag) coding-agent CLI from another agent: offloading work, writing briefs, reviewing results, retrying, escalating, capping spend, and running unattended.
+Agent skills for driving the [AgenC](https://get.agenc.ag) coding-agent CLI from another agent: offloading work, writing briefs, reviewing results, retrying, escalating, handing off, capping spend, and running unattended.
 
 | Skill | Use when |
 |---|---|
@@ -11,6 +11,7 @@ Agent skills for driving the [AgenC](https://get.agenc.ag) coding-agent CLI from
 | [agenc-review](agenc-review/SKILL.md) | An AgenC run produced a change and you must accept, fix, or reject it. |
 | [agenc-retry](agenc-retry/SKILL.md) | A run failed, hit a cap, or returned bad work, and you must decide what to do next. |
 | [agenc-escalate-to-lead](agenc-escalate-to-lead/SKILL.md) | Subagents must stop and escalate to their lead instead of guessing, and the lead must triage them. |
+| [agenc-handoff](agenc-handoff/SKILL.md) | Work moves between agents, runs, or to a human, and the next owner must pick it up from a file, not chat. |
 | [agenc-spend-guard](agenc-spend-guard/SKILL.md) | A job must stay under a dollar limit, measured from your provider's real usage. |
 | [agenc-unattended](agenc-unattended/SKILL.md) | You run AgenC from cron, CI, or other automation nobody is watching. |
 
