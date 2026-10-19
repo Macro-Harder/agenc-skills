@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -u
+GATE_PRIMARY="/workspace/desk-lib/xai-receipt-gate"
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+GATE_FALLBACK="$REPO_ROOT/desk-lib/xai-receipt-gate"
+if [ -f "$GATE_PRIMARY" ]; then
+  GATE="$GATE_PRIMARY"
+elif [ -f "$GATE_FALLBACK" ]; then
+  GATE="$GATE_FALLBACK"
+else
+  if [[ "${XAI_GATE_WAIVER:-}" == "Captain "* ]]; then
+    echo "WARNING: xai-receipt-gate not found; Captain waiver active" >&2
+    exit 0
+  else
+    echo "BLOCKED: xai-receipt-gate not found at /workspace/desk-lib/xai-receipt-gate; install it (desk-engineering/desk-lib/xai-receipt-gate) or get a Captain waiver"
+    exit 1
+  fi
+fi
+HOOKDIR=$(cd "$(dirname "$0")" && pwd)
+CONFIG=()
+if [ -f "$HOOKDIR/xai-gate.json" ]; then
+  CONFIG=(--config "$HOOKDIR/xai-gate.json")
+fi
+exec python3 "$GATE" --repo "$REPO_ROOT" --pre-push "${CONFIG[@]+"${CONFIG[@]}"}"
