@@ -44,6 +44,7 @@ RED TEAM (audits) is a separate independent team. Blue and red never share a run
 6. Gates, in order: (roster pre-build members such as Architect/Test Author/Integrator per [`blue-team-roster`](../blue-team-roster/SKILL.md)) Builder -> Verifier -> red team audit on the same sha -> independent cross-check of findings (see [`xmodel-confirm`](../xmodel-confirm/SKILL.md)) -> Fixer on confirmed findings (re-verify and re-audit the new sha) -> three strikes on the same failure lead to the write-up and blue-team Rebuilder (see [`three-strike-rebuild`](../three-strike-rebuild/SKILL.md); Fixer on hold) -> CLEAR packet -> human approval before anything ships. Map to <job-dir>/packets/ files: SPEC.md (intake), BUILD.md (builder), AUDIT.md (red team), CLEAR.md (final).
 
 After three strikes the Fixer stops for that failure (pick_roster.py marks it "on hold") and only the Rebuilder runs.
+Before any from-scratch rebuild, require and acknowledge the rebuild dossier (see [`rebuild-dossier`](../rebuild-dossier/SKILL.md)).
 
 7. Cost: Snapshot the key usage before and after (see [`agenc-spend-guard`](../agenc-spend-guard/SKILL.md) for snapshot/check), print only limit, limit_remaining, usage. Never any CLI's own cost estimate. Several children share one key, so per-unit numbers are "polluted"; your own lead run uses the same key, so the job delta includes the lead; report the job total as the settled delta and label per-unit numbers polluted.
 
