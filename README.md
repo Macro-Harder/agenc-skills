@@ -14,12 +14,15 @@ Agent skills for driving the [AgenC](https://get.agenc.ag) coding-agent CLI from
 | [rebuild-dossier](rebuild-dossier/SKILL.md) | A unit is going back to a from-scratch rebuild, so write or extend an append-only dossier (known knowns, known unknowns, failed premises, what to keep, verification bar) and hand it to the lead agent, who records receipt before the new build starts. |
 | [agenc-escalate-to-lead](agenc-escalate-to-lead/SKILL.md) | Subagents must stop and escalate to their lead instead of guessing, and the lead must triage them. |
 | [agenc-handoff](agenc-handoff/SKILL.md) | Work moves between agents, runs, or to a human, and the next owner must pick it up from a file, not chat. |
-| [agenc-spend-guard](agenc-spend-guard/SKILL.md) | A job must stay under a dollar limit, measured from your provider's real usage. |
+| [agenc-spend-guard](agenc-spend-guard/SKILL.md) | A job must stay under a dollar limit, measured from your provider's real usage, or you must report real spend next to AgenC's estimate (`cost_compare.py`). |
 | [agenc-batching](agenc-batching/SKILL.md) | Many small independent asks would each pay the fixed per-run prompt overhead; batch them into one run. |
 | [agenc-unattended](agenc-unattended/SKILL.md) | You run AgenC from cron, CI, or other automation nobody is watching. |
 | [xmodel-confirm](xmodel-confirm/SKILL.md) | An auditor or red team reports bugs and you want to know if a different model independently finds or confirms each one before acting on it. |
 | [agenc-lead](agenc-lead/SKILL.md) | A team of AgenC subagent runs for intake, roster, dispatch, watch, independent verification, red team gates, real cost, report and handoff needs oversight; a lead agent manages them. |
 | [blue-team-roster](blue-team-roster/SKILL.md) | Risk signals from a project call for deciding blue-team member roles to launch; select the smallest roster that covers the risks. |
+| [agenc-run-status](agenc-run-status/SKILL.md) | You need the real status of a supervised AgenC lead run (supervisor, lead model and session, live children, real spend, last log lines) in one read-only command. |
+| [agenc-order-lead](agenc-order-lead/SKILL.md) | A running lead must get a new order without a restart: append it, tagged, to every copy of its job docs and confirm from its session that it read it. |
+| [agenc-kit](agenc-kit/SKILL.md) | A lead agent files requests for tools or access it cannot install, and records the skills and agents it builds, in a kit folder its operator reads and grants. |
 
 Install: copy the skill folders you want into your agent's skills directory. Each folder is a `SKILL.md` plus any helper script it uses. Skills link to each other by relative path, so copy the ones they reference too.
 

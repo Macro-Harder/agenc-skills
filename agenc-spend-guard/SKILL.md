@@ -1,10 +1,10 @@
 ---
 name: agenc-spend-guard
-description: Use when an AgenC job (or any metered agent job) must stay under a dollar limit and you need the real spend from your provider, not the agent's own estimate.
+description: Use when an AgenC job (or any metered agent job) must stay under a dollar limit, or you must report what it really cost, and you need the real spend from your provider next to the agent's own estimate.
 ---
 # Keep AgenC jobs under a dollar limit
 
-Measure spend where the money is counted: your provider's usage endpoint. AgenC's `tokenUsage.costUsd` is an estimate and can be off by 100x or more. Never use it to enforce or report a limit.
+Measure spend where the money is counted: your provider's usage endpoint. AgenC's `tokenUsage.costUsd` is an estimate and can be off by 100x or more (measured 4,699x over one whole job; see section 9). Never use it to enforce or report a limit.
 
 Checked against AgenC 0.19.9. Run `agenc help <command>` to confirm flags.
 
@@ -122,3 +122,35 @@ Report the settled delta from the guard, the job it covers, and whether usage ha
 ```text
 Spend: $0.0097 real (provider usage delta, settled after 50s, key used by this job only)
 ```
+
+## 9. Estimate vs real, side by side
+
+Run `cost_compare.py` (beside `spend_guard.py`, read-only, no network) before any spend report, and whenever someone quotes `costUsd` or `heldCostUsd`.
+
+```bash
+python3 cost_compare.py --watch-log <meta-dir>/budget_watch.log \
+  --sessions '<agenc-home>/projects/<project-prefix>*/sessions/*/rollout-*.jsonl' \
+  [--since '2026-10-19 13:03']
+# or, without a watcher log:
+python3 cost_compare.py --snapshot-before before.json --snapshot-after after.json --sessions '<glob>'
+```
+
+- **Real side.** A watcher log of key usage (`usage=` lines, `base=` on its start line), or two key snapshot files with a `usage` field. The script never reads the key.
+- **Estimate side.** The last `session_usage` of every matching rollout, summed. `--since` limits both sides to a window.
+- Pass rollouts or stream-json `--out-jsonl` files for a run, not both: they double count.
+- `heldCostUsd` is a reservation estimate, not spend.
+
+Output (literal, one real job):
+
+```
+REAL   $0.049931  (provider key usage delta; watch-log budget_watch.log; window since 2026-10-19 13:03; base 7.696538 -> now 7.746470)
+EST    $2491.243050  (AgenC costUsd sum, estimate)
+RATIO  est/real = 49893.4x
+JOB    $4.662880  (whole job on this key: watcher base 3.083589 -> now 7.746470)
+```
+
+Whole job, no `--since`: 215 sessions, EST $21,911.91 vs REAL $4.66, ratio 4,699x. One lead session on a $0 free model showed `costUsd` 244.08 by itself. The ratio swings with the model mix (free models push it up), so never scale the estimate down by a fixed factor; read REAL.
+
+- `REAL` is the number to report; `JOB` is the whole job on that key since the watcher's baseline.
+- Exit `11` means no real source was readable: report spend as unconfirmed. Never fall back to the estimate.
+- The key may be shared with other jobs; say so when you report (section 1).
